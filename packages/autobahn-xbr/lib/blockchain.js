@@ -46,7 +46,7 @@ SimpleBlockchain.prototype.stop = function() {
 };
 
 SimpleBlockchain.prototype.getMarketStatus = async function(marketID) {
-    let owner = xbr.xbrnetwork.getMarketOwner(marketID);
+    let owner = await xbr.xbrnetwork.getMarketOwner(marketID);
     if (owner == null || owner == "0x0000000000000000000000000000000000000000") {
         return null;
     } else {
@@ -55,7 +55,7 @@ SimpleBlockchain.prototype.getMarketStatus = async function(marketID) {
 };
 
 SimpleBlockchain.prototype.getDomainStatus = async function(domainID) {
-    status = xbr.xbrnetwork.getDomainStatus(domainID);
+    status = await xbr.xbrnetwork.getDomainStatus(domainID);
     if (status == DomainStatus_NULL) {
         return null;
     } else if (status == DomainStatus_ACTIVE) {
@@ -82,15 +82,15 @@ SimpleBlockchain.prototype.getChannelStatus = function(channelAddr) {
 };
 
 SimpleBlockchain.prototype.getMemberStatus = async function(memberAddr) {
-    let level = xbr.xbrnetwork.getMemberLevel(memberAddr);
+    let level = await xbr.xbrnetwork.getMemberLevel(memberAddr);
     if (level == null) {
         return null;
     }
-    let eula = xbr.xbrnetwork.getMemberEula(memberAddr);
+    let eula = await xbr.xbrnetwork.getMemberEula(memberAddr);
     if (eula == null || eula.trim() == '') {
         return null;
     }
-    let profile = xbr.xbrnetwork.getMemberProfile(memberAddr);
+    let profile = await xbr.xbrnetwork.getMemberProfile(memberAddr);
     if (profile == null || profile.trim() == '') {
         profile = null;
     }
