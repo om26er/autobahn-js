@@ -46,7 +46,7 @@ SimpleBlockchain.prototype.stop = function() {
 };
 
 SimpleBlockchain.prototype.getMarketStatus = async function(marketID) {
-    let owner = xbr.xbrnetwork.functions.getMarketOwner(marketID).call();
+    let owner = xbr.xbrnetwork.getMarketOwner(marketID);
     if (owner == null || owner == "0x0000000000000000000000000000000000000000") {
         return null;
     } else {
@@ -55,7 +55,7 @@ SimpleBlockchain.prototype.getMarketStatus = async function(marketID) {
 };
 
 SimpleBlockchain.prototype.getDomainStatus = async function(domainID) {
-    status = xbr.xbrnetwork.functions.getDomainStatus(domainID).call();
+    status = xbr.xbrnetwork.getDomainStatus(domainID);
     if (status == DomainStatus_NULL) {
         return null;
     } else if (status == DomainStatus_ACTIVE) {
@@ -82,15 +82,15 @@ SimpleBlockchain.prototype.getChannelStatus = function(channelAddr) {
 };
 
 SimpleBlockchain.prototype.getMemberStatus = async function(memberAddr) {
-    var level = xbr.xbrnetwork.functions.getMemberLevel(memberAddr).call();
+    var level = xbr.xbrnetwork.getMemberLevel(memberAddr);
     if (level == null) {
         return null;
     }
-    var eula = xbr.xbrnetwork.functions.getMemberEula(memberAddr).call();
+    var eula = xbr.xbrnetwork.getMemberEula(memberAddr);
     if (eula == null || eula.trim() == '') {
         return null;
     }
-    var profile = xbr.xbrnetwork.functions.getMemberProfile(memberAddr).call();
+    var profile = xbr.xbrnetwork.getMemberProfile(memberAddr);
     if (profile == null || profile.trim() == '') {
         profile = null;
     }
@@ -101,8 +101,8 @@ SimpleBlockchain.prototype.getMemberStatus = async function(memberAddr) {
 };
 
 SimpleBlockchain.prototype.getBalances = async function(accountAddr) {
-    var balanceETH = this.w3.eth.getBalance(accountAddr);
-    var balanceXBR = xbr.xbrtoken.functions.balanceOf(accountAddr).call()
+    var balanceETH = await this.w3.eth.getBalance(accountAddr);
+    var balanceXBR = await xbr.xbrtoken.balanceOf(accountAddr);
     return {
         'ETH': balanceETH,
         'XBR': balanceXBR,
