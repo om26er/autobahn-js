@@ -11,14 +11,14 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-var Web3 = require("web3");
-var xbr = require('./ethereum.js');
+let Web3 = require("web3");
+let xbr = require('./ethereum.js');
 
-var DomainStatus_NULL = 0;
-var DomainStatus_ACTIVE = 1;
-var DomainStatus_CLOSED = 2;
+const DomainStatus_NULL = 0;
+const DomainStatus_ACTIVE = 1;
+const DomainStatus_CLOSED = 2;
 
-var SimpleBlockchain = function (gateway) {
+let SimpleBlockchain = function (gateway) {
     this.gateway = gateway;
     this.w3 = null;
 };
@@ -82,15 +82,15 @@ SimpleBlockchain.prototype.getChannelStatus = function(channelAddr) {
 };
 
 SimpleBlockchain.prototype.getMemberStatus = async function(memberAddr) {
-    var level = xbr.xbrnetwork.getMemberLevel(memberAddr);
+    let level = xbr.xbrnetwork.getMemberLevel(memberAddr);
     if (level == null) {
         return null;
     }
-    var eula = xbr.xbrnetwork.getMemberEula(memberAddr);
+    let eula = xbr.xbrnetwork.getMemberEula(memberAddr);
     if (eula == null || eula.trim() == '') {
         return null;
     }
-    var profile = xbr.xbrnetwork.getMemberProfile(memberAddr);
+    let profile = xbr.xbrnetwork.getMemberProfile(memberAddr);
     if (profile == null || profile.trim() == '') {
         profile = null;
     }
@@ -101,8 +101,8 @@ SimpleBlockchain.prototype.getMemberStatus = async function(memberAddr) {
 };
 
 SimpleBlockchain.prototype.getBalances = async function(accountAddr) {
-    var balanceETH = await this.w3.eth.getBalance(accountAddr);
-    var balanceXBR = await xbr.xbrtoken.balanceOf(accountAddr);
+    let balanceETH = await this.w3.eth.getBalance(accountAddr);
+    let balanceXBR = await xbr.xbrtoken.balanceOf(accountAddr);
     return {
         'ETH': balanceETH,
         'XBR': balanceXBR,
