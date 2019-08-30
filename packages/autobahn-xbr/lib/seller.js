@@ -17,10 +17,19 @@ var key_series = require('./keyseries');
 var nacl = require('tweetnacl');
 var util = require('./util.js');
 
+const STATE_NONE = 0;
+const STATE_STARTING = 1;
+const STATE_STARTED = 2;
+const STATE_STOPPING = 3;
+const STATE_STOPPED = 4;
 
-var Seller = function (sellerKey) {
+
+var Seller = function (marketMakerAddr, sellerKey, providerID) {
     self = this;
+    this.state = STATE_NONE;
+    this.marketMakerAddr = marketMakerAddr;
     this.sellerKey = sellerKey;
+    this.providerID = providerID;
     this.keys = {};
     this.keysMap = {};
     this._providerID = eth_util.bufferToHex(eth_util.privateToPublic(sellerKey));
@@ -34,6 +43,7 @@ var Seller = function (sellerKey) {
 };
 
 Seller.prototype.start = function (session) {
+    self.state = STATE_STARTING;
     self._session = session;
 
     var d = this._deferred_factory();
