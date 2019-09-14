@@ -16,6 +16,7 @@
 //exports.web3 = web3;
 
 var ethereum = require('./ethereum.js');
+var Web3 = require("web3");
 
 exports.SimpleBuyer = require('./buyer.js').SimpleBuyer;
 exports.SimpleSeller = require('./seller.js').SimpleSeller;
@@ -50,3 +51,4 @@ exports.NodeType = ethereum.NodeType;
 exports.ActorType = ethereum.ActorType;
 
 exports.uuid = ethereum.uuid;
+exports.BN = Web3.utils.BN;
