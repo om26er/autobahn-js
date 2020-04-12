@@ -1,0 +1,21 @@
+name: Autobahn JS CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Update apt cache
+      run: sudo apt update
+
+    - name: Install apt dependencies
+      run: |
+        sudo pip3 install --no-cache-dir -U scons boto taschenmesser
